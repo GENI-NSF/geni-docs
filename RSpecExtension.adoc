@@ -1,0 +1,30 @@
+# Creating an extension
+
+An rspec extension is typically created in RelaxNG Compact (rnc) format. This format is then "compiled" into an XML Schema (xsd file).
+
+Here is an rnc file for the post-boot script extension (comments removed):
+
+```
+default namespace = "http://www.geni.net/resources/rspec/ext/postBootScript/1"
+
+Services =
+  element services_post_boot_script { PostBootScriptContents }
+
+PostBootScriptContents =
+  attribute type { text } &
+  text
+
+start = Services
+```
+
+Now, run [trang](http://www.thaiopensource.com/relaxng/trang-manual.html) to translate the rnc file to an xsd file:
+
+```
+java -jar trang.jar request.rnc request.xsd
+```
+
+These files (request.rnc, request.xsd) live in an emulab-hosted git repository
+(git-public.flux.utah.edu:/git/geni-rspec.git). 
+See http://users.emulab.net/trac/emulab/wiki/GITWorkflow for info.
+
+There's more to the story, but these are the basics.
